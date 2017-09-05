@@ -10,7 +10,9 @@ namespace TrieLib
         public ConcurrentDictionary<char, Node> Children { get; set; }
         public Node Parent { get; set; }
         public int Depth { get; set; }
-        public List<int> Indexes { get; set; }
+        private List<int> _indexes;
+
+        private static object lockObject = new object();
 
         public Node(char value, int depth, Node parent, int? index)
         {
@@ -18,8 +20,7 @@ namespace TrieLib
             Children = new ConcurrentDictionary<char,Node>();
             Depth = depth;
             Parent = parent;
-            Indexes = new List<int>();
-            if (index.HasValue) Indexes.Add(index.Value);
+            if (index.HasValue) AddIndex(index.Value);
         }
 
         public bool IsLeaf
@@ -35,6 +36,23 @@ namespace TrieLib
             get
             {
                 return Value == '$';
+            }
+        }
+
+        public void AddIndex(int index)
+        {
+            lock(lockObject)
+            {
+                if (_indexes == null) _indexes = new List<int>();
+                _indexes.Add(index);
+            }
+        }
+
+        public List<int> Indexes
+        {
+            get
+            {
+                return _indexes ?? new List<int>();
             }
         }
 

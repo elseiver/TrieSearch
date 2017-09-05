@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TestConsole
@@ -9,24 +10,13 @@ namespace TestConsole
         {
             var trie = new TrieLib.Trie();
 
-            trie.Insert("Victor", 1);
-            trie.Insert("ictor", 1);
-            trie.Insert("ctor", 1);
-            trie.Insert("tor", 1);
-            trie.Insert("or", 1);
-            trie.Insert("Alex", 2);
-            trie.Insert("lex", 2);
-            trie.Insert("ex", 2);
-            trie.Insert("x", 2);
-            trie.Insert("Constructor", 3);
-            trie.Insert("onstructor", 3);
-            trie.Insert("nstructor", 3);
-            trie.Insert("structor", 3);
-            trie.Insert("tructor", 3);
-            trie.Insert("ructor", 3);
-            trie.Insert("uctor", 3);
-            trie.Insert("ctor", 3);
-            trie.Insert("tor", 3);
+            var itemsSet = new Dictionary<int, string>();
+            itemsSet.Add(1, "Victor");
+            itemsSet.Add(2, "Alex");
+            itemsSet.Add(3, "Constructor");
+            itemsSet.Add(4, "Destructor");
+
+            trie.InsertSet(itemsSet);
 
 
 
@@ -34,6 +24,8 @@ namespace TestConsole
             Console.WriteLine(string.Join(',', trie.Search("Test").Select(s => $"{s}")));
             Console.WriteLine(string.Join(',', trie.Search("Victor").Select(s => $"{s}")));
             Console.WriteLine(string.Join(',', trie.Search("tor").Select(s => $"{s}")));
+            Console.WriteLine(string.Join(',', trie.Search("e").Select(s => $"{s}")));
+            Console.WriteLine(string.Join(',', trie.Search("o").Select(s => $"{s}")));
 
             Console.ReadLine();
         }

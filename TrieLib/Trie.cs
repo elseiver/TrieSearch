@@ -56,6 +56,17 @@ namespace TrieLib
             return inputList;
         }
 
+        public void InsertSet(Dictionary<int, string> items)
+        {
+            foreach(var item in items)
+            {
+                for(int i = 0; i < item.Value.Length; i++)
+                {
+                    Insert(item.Value.Substring(i), item.Key);
+                }
+            }
+        }
+
         public void Insert(List<string> items)
         {
             for (int i = 0; i < items.Count; i++)
@@ -81,7 +92,7 @@ namespace TrieLib
             }
             else
             {
-                node.Indexes.Add(index);
+                node.AddIndex(index);
             }
         }
 
